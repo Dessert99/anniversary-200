@@ -1,7 +1,6 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-
 import React, {
   createContext,
   useState,
@@ -49,7 +48,8 @@ export const CardContainer = ({
     <MouseEnterContext.Provider value={[isMouseEntered, setIsMouseEntered]}>
       <div
         className={cn(
-          "py-20 flex items-center justify-center",
+          // 🚨 수정됨: relative 추가 (여기가 Position 경고의 주범!)
+          "py-20 flex items-center justify-center relative",
           containerClassName,
         )}
         style={{
@@ -144,7 +144,6 @@ export const CardItem = ({
   );
 };
 
-// Create a hook to use the context
 export const useMouseEnter = () => {
   const context = useContext(MouseEnterContext);
   if (context === undefined) {
