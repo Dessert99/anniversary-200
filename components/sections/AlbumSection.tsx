@@ -41,7 +41,42 @@ export function AlbumSection() {
 // ✅ 이미지 경로를 안전하게 로컬 파일로 통일했습니다. (에러 방지용)
 // 나중에 public/images 폴더에 실제 사진들을 넣고 파일명만 바꿔주시면 됩니다!
 // 1.jpeg 부터 30.jpeg 까지 자동으로 경로 생성
-const images = Array.from(
-  { length: 59 },
-  (_, i) => `/images/album/${i + 1}.jpeg`,
-);
+// ✅ 파일 이름을 직접 지정해서 에러 방지 (존재하는 파일만 리스트업)
+const images = [
+  "/images/album/1.jpeg",
+  "/images/album/2.jpeg",
+  "/images/album/3.jpeg",
+  "/images/album/4.jpeg",
+  "/images/album/5.jpeg",
+  "/images/album/6.jpeg",
+  "/images/album/7.jpeg",
+  "/images/album/8.jpeg",
+  "/images/album/10.jpeg",
+  "/images/album/11.jpeg",
+  "/images/album/12.jpeg",
+  "/images/album/13.jpeg",
+  "/images/album/14.jpeg",
+  "/images/album/15.jpeg",
+  "/images/album/16.jpeg",
+  "/images/album/18.jpeg",
+  "/images/album/19.jpeg",
+  "/images/album/21.jpeg",
+  "/images/album/22.jpeg",
+  "/images/album/23.jpeg",
+  "/images/album/25.jpeg",
+  "/images/album/26.jpeg",
+  "/images/album/27.jpeg",
+  "/images/album/28.jpeg",
+  "/images/album/30.jpeg",
+  "/images/album/32.jpeg",
+  "/images/album/35.jpeg",
+  "/images/album/38.jpeg",
+  "/images/album/39.jpeg",
+  "/images/album/40.jpeg",
+
+  "/images/album/43.jpeg",
+  "/images/album/44.jpeg",
+  "/images/album/47.jpeg",
+  "/images/album/51.jpeg",
+  "/images/album/52.jpeg",
+];
