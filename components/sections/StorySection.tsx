@@ -1,19 +1,41 @@
 // src/components/sections/StorySection.tsx
 "use client";
-
-import React from "react";
 import { TracingBeam } from "@/components/ui/tracing-beam";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
+import Image from "next/image";
+import Snowfall from "react-snowfall"; // ✅ 눈 내리는 라이브러리 추가
 
 export function StorySection() {
   return (
-    <div className="w-full bg-black py-20 relative">
-      <TracingBeam className="px-6">
+    // overflow-hidden 추가: 눈송이가 영역 밖으로 나가서 스크롤 생기는 것 방지
+    <div className="w-full bg-black py-20 relative overflow-hidden">
+      {/* ❄️ 눈 내리는 효과 (배경) */}
+      <Snowfall
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          zIndex: 0, // 배경으로 배치
+        }}
+        snowflakeCount={100} // 텍스트 읽는데 방해 안 되게 적당히
+        color="#ffffff"
+        opacity={[2, 5]}
+        speed={[0.5, 1.0]}
+        wind={[-0.5, 0.5]}
+        radius={[0.5, 2.0]}
+      />
+
+      {/* TracingBeam에 z-10을 줘서 눈보다 위에 올라오게 합니다.
+        (버튼 클릭 등이 막히지 않게 하기 위함) 
+      */}
+      <TracingBeam className="px-6 relative z-10">
         <div className="max-w-2xl mx-auto antialiased pt-4 relative">
           {/* 제목 */}
           <div className="mb-10">
             <h2 className="text-3xl md:text-5xl font-bold text-white">
-              Our Story 📖
+              우리의 이야기
             </h2>
             <p className="text-gray-400 mt-4 text-lg">
               우리가 함께 걸어온 시간들
@@ -50,24 +72,16 @@ export function StorySection() {
                   </CardItem>
 
                   {/* 카드 이미지 */}
-                  <CardItem translateZ="100" className="w-full mt-4">
-                    <img
+                  <CardItem translateZ="100" className="w-full  mt-4">
+                    <Image
                       src={item.image}
-                      className="h-60 w-full object-cover rounded-xl group-hover/card:shadow-xl"
+                      height={300} // 원본 비율에 맞춰 넉넉하게
+                      width={1000} // 원본 비율에 맞춰 넉넉하게
+                      className="w-full h-100 object-contain rounded-xl group-hover/card:shadow-xl"
                       alt="thumbnail"
+                      priority={true} // 처음 2개는 미리 로딩해서 깜빡임 방지
                     />
                   </CardItem>
-
-                  {/* 버튼 같은 장식 (옵션) */}
-                  <div className="flex justify-between items-center mt-10">
-                    <CardItem
-                      translateZ={20}
-                      as="button"
-                      className="px-4 py-2 rounded-xl text-xs font-normal dark:text-white"
-                    >
-                      기억나? →
-                    </CardItem>
-                  </div>
                 </CardBody>
               </CardContainer>
             </div>
@@ -81,31 +95,52 @@ export function StorySection() {
 // 📝 여기에 너희의 이야기를 채워넣으면 돼!
 const stories = [
   {
-    title: "우리의 첫 만남",
-    date: "2025.XX.XX",
-    description: "처음 만났던 카페, 기억나? 엄청 떨렸었는데...",
-    image:
-      "https://images.unsplash.com/photo-1516664923483-3765f025076e?q=80&w=1000&auto=format&fit=crop",
+    title: "우리의 첫(?) 데이트",
+    date: "2025.05.",
+    description: `사귀고 나서 처음으로 놀러 갔던 날이다! ${"\n"}
+    아직 어색해서 조금 긴장했던 기억이 있네 ㅎㅎㅎ
+    `,
+    image: "/images/stroy/month5.jpeg",
   },
   {
-    title: "첫 번째 데이트",
-    date: "2025.XX.XX",
-    description: "한강 공원에서 라면 먹고 산책했던 날.",
-    image:
-      "https://images.unsplash.com/photo-1542662565-7e4b66b5adaa?q=80&w=1000&auto=format&fit=crop",
+    title: "행궁동 놀러 간 날~",
+    date: "2025.06.",
+    description: `야경을 못 봐서 아쉬웠지만 규카츠도 먹고 모루인형도 만들고 재밌는 하루였따`,
+    image: "/images/stroy/month6.jpeg",
   },
   {
-    title: "100일 기념일",
-    date: "2025.XX.XX",
-    description: "서로 편지 써주고 케이크 불었던 날! 감동이었어.",
-    image:
-      "https://images.unsplash.com/photo-1578985545062-69928b1d9587?q=80&w=1000&auto=format&fit=crop",
+    title: "뽀정이 조교 근무 따라간 날",
+    date: "2025.07.",
+    description:
+      "보정이 심심할까 봐 모현으로 같이 간 날! 솔직히 과방에 누구 들어올까 봐 걱정했어 ㅋㅋㅋ",
+    image: "/images/stroy/month7.jpeg",
   },
   {
-    title: "제주도 여행",
-    date: "2025.XX.XX",
-    description: "비행기 타고 슝~ 바다 색깔 너무 예뻤지?",
-    image:
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1000&auto=format&fit=crop",
+    title: "우리의 100일",
+    date: "2025.08.",
+    description:
+      "이거 맞추고 여기저기 막 자랑하고 다님. 이때가 엊그제 같은데 벌써 200일이라니!",
+    image: "/images/stroy/month8.jpeg",
+  },
+  {
+    title: "귀멸의 칼날 본 날",
+    date: "2025.09.",
+    description: `보정이 이 날 기억 안 나지? 9월에 같이 찍은 사진이 별로 없더라고. ${"\n"}
+      보정이가 기유를 너무 좋아해서 질투 났지만 귀칼 같이 봐줘서 참을게.
+    `,
+    image: "/images/stroy/month9.jpeg",
+  },
+  {
+    title: "부산 여행",
+    date: "2025.10.",
+    description: `진짜 잊지 못할 추억을 쌓은 날이야. 날씨가 별로였지만 보정이랑 같이 있어서 재밌었다~`,
+    image: "/images/stroy/month10.jpeg",
+  },
+  {
+    title: "내 생일",
+    date: "2025.11.",
+    description:
+      "이날 진짜 감동했음. 생일을 이렇게까지 축하받은 적은 없었는데 뽀정이한테 너무 고마웠어",
+    image: "/images/stroy/month11.jpeg",
   },
 ];

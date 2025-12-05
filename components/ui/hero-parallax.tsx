@@ -15,6 +15,7 @@ export const HeroParallax = ({
     title: string;
     link: string;
     thumbnail: string;
+    desc?: string;
   }[];
 }) => {
   const firstRow = products.slice(0, 5);
@@ -106,9 +107,7 @@ export const Header = () => {
         우리가 함께한 <br /> 200일의 기록
       </h1>
       <p className="max-w-2xl text-base md:text-xl mt-8 dark:text-neutral-200">
-        너와 함께한 모든 순간이 나에게는 선물이었어. <br />
-        우리의 소중한 추억들을 이곳에 모아봤어. <br />
-        사랑해!
+        200일 기념으로 우리의 소중한 추억들을 이곳에 모아봤어! <br />
       </p>
     </div>
   );
@@ -117,6 +116,7 @@ export const Header = () => {
 export const ProductCard = ({
   product,
   translate,
+  onClick,
 }: {
   product: {
     title: string;
@@ -124,6 +124,7 @@ export const ProductCard = ({
     thumbnail: string;
   };
   translate: MotionValue<number>;
+  onClick?: (product: any) => void;
 }) => {
   return (
     <motion.div
@@ -134,9 +135,10 @@ export const ProductCard = ({
         y: -20,
       }}
       key={product.title}
-      className="group/product h-96 w-[30rem] relative shrink-0"
+      className="group/product h-80  w-80 relative shrink-0"
+      onClick={() => onClick && onClick(product)}
     >
-      <a href={product.link} className="block group-hover/product:shadow-2xl ">
+      <div className="block group-hover/product:shadow-2xl ">
         <img
           src={product.thumbnail}
           height="600"
@@ -144,7 +146,7 @@ export const ProductCard = ({
           className="object-cover object-left-top absolute h-full w-full inset-0"
           alt={product.title}
         />
-      </a>
+      </div>
       <div className="absolute inset-0 h-full w-full opacity-0 group-hover/product:opacity-80 bg-black pointer-events-none"></div>
       <h2 className="absolute bottom-4 left-4 opacity-0 group-hover/product:opacity-100 text-white">
         {product.title}
