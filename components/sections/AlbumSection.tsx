@@ -1,45 +1,47 @@
-// src/components/sections/AlbumSection.tsx
 "use client";
 
 import { ParallaxScroll } from "@/components/ui/parallax-scroll";
+import Snowfall from "react-snowfall"; // ✅ 눈 내리는 라이브러리 추가
 
 export function AlbumSection() {
   return (
-    <div className="w-full bg-black py-20">
-      <div className="max-w-7xl mx-auto px-4 mb-10">
-        <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
-          All Our Moments 📸
-        </h2>
-        <p className="text-gray-400 text-lg">
-          놓치고 싶지 않은 우리의 모든 순간들
-        </p>
-      </div>
+    <div className="w-full bg-black py-20 relative overflow-hidden">
+      {/* ❄️ 눈 내리는 효과 추가 */}
+      <Snowfall
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          zIndex: 0, // 배경으로 보내기
+        }}
+        snowflakeCount={200} // 눈송이 개수 (앨범 보는데 방해 안 되게 적당히)
+        color="#ffffff"
+        opacity={[0.3, 0.6]} // 너무 진하지 않게 투명도 조절
+        speed={[2, 3]} // 차분하게 내리는 속도
+        wind={[-0.5, 0.5]} // 살랑거리는 바람
+        radius={[0.5, 2.0]} // 눈송이 크기
+      />
 
-      {/* 갤러리 컴포넌트 */}
-      <ParallaxScroll images={images} />
+      {/* 텍스트와 앨범 콘텐츠 (눈 위에 표시) */}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 mb-10">
+        <h2 className="text-3xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg">
+          놓치고 싶지 않은 우리의 모든 순간들 📸
+        </h2>
+      </div>
+      {/* 갤러리 컴포넌트 (눈 위에 표시) */}
+      <div className="relative z-10">
+        <ParallaxScroll images={images} />
+      </div>
     </div>
   );
 }
 
-// 📸 사진 데이터 (나중에 public/images 폴더에 있는 파일 경로로 바꾸면 돼!)
-const images = [
-  "https://images.unsplash.com/photo-1554080353-a576cf803bda?q=80&w=1000&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1505144808419-1957a94ca61e?q=80&w=1000&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?q=80&w=1000&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1682686581854-5e71f58e7e3f?q=80&w=1000&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1510784722466-f2aa9c52fff6?q=80&w=1000&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1505765050516-f72dcac9c60e?q=80&w=1000&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1434725039720-bb36506364d9?q=80&w=1000&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1000&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1516664923483-3765f025076e?q=80&w=1000&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1526772662000-3f88f107f5d8?q=80&w=1000&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=1000&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1000&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1578985545062-69928b1d9587?q=80&w=1000&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1542662565-7e4b66b5adaa?q=80&w=1000&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1493246507139-91e8fad9978e?q=80&w=1000&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1522383225653-ed111181a951?q=80&w=1000&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?q=80&w=1000&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=1000&auto=format&fit=crop",
-];
+// ✅ 이미지 경로를 안전하게 로컬 파일로 통일했습니다. (에러 방지용)
+// 나중에 public/images 폴더에 실제 사진들을 넣고 파일명만 바꿔주시면 됩니다!
+// 1.jpeg 부터 30.jpeg 까지 자동으로 경로 생성
+const images = Array.from(
+  { length: 59 },
+  (_, i) => `/images/album/${i + 1}.jpeg`,
+);
