@@ -1,12 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import {
-  motion,
-  useTransform,
-  useScroll,
-  useVelocity,
-  useSpring,
-} from "motion/react";
+import { motion, useTransform, useScroll, useSpring } from "motion/react";
 import { cn } from "@/lib/utils";
 
 export const TracingBeam = ({
@@ -29,6 +23,12 @@ export const TracingBeam = ({
     if (contentRef.current) {
       setSvgHeight(contentRef.current.offsetHeight);
     }
+    // 창 크기가 바뀌면 선 길이도 다시 계산하도록 리스너 추가 (선택사항이나 추천)
+    const handleResize = () => {
+      if (contentRef.current) setSvgHeight(contentRef.current.offsetHeight);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const y1 = useSpring(
@@ -71,8 +71,10 @@ export const TracingBeam = ({
               delay: 0.5,
             }}
             animate={{
-              backgroundColor: scrollYProgress.get() > 0 ? "white" : "#10b981",
-              borderColor: scrollYProgress.get() > 0 ? "white" : "#059669",
+              // 🚨 수정됨: "white" -> "#ffffff" (Framer Motion이 헷갈려하지 않게 수정)
+              backgroundColor:
+                scrollYProgress.get() > 0 ? "#ffffff" : "#10b981",
+              borderColor: scrollYProgress.get() > 0 ? "#ffffff" : "#059669",
             }}
             className="h-2 w-2 rounded-full border border-neutral-300 bg-white"
           />
@@ -80,7 +82,7 @@ export const TracingBeam = ({
         <svg
           viewBox={`0 0 20 ${svgHeight}`}
           width="20"
-          height={svgHeight} // Set the SVG height
+          height={svgHeight}
           className="ml-4 block"
           aria-hidden="true"
         >
@@ -109,8 +111,8 @@ export const TracingBeam = ({
               gradientUnits="userSpaceOnUse"
               x1="0"
               x2="0"
-              y1={y1} // set y1 for gradient
-              y2={y2} // set y2 for gradient
+              y1={y1}
+              y2={y2}
             >
               <stop stopColor="#18CCFC" stopOpacity="0"></stop>
               <stop stopColor="#18CCFC"></stop>
@@ -120,7 +122,10 @@ export const TracingBeam = ({
           </defs>
         </svg>
       </div>
-      <div ref={contentRef}>{children}</div>
+      {/* 🚨 수정됨: relative 추가 (내부 요소 위치 기준점) */}
+      <div ref={contentRef} className="relative">
+        {children}
+      </div>
     </motion.div>
   );
 };
