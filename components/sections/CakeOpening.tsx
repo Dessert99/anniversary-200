@@ -189,7 +189,7 @@ function CakeModel() {
       <DreiImage
         url="/images/cake/cake.png"
         position={[0, 3, 0]}
-        scale={[3, 3, 1]}
+        scale={[3, 3]}
         transparent
       />
 
